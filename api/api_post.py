@@ -5,7 +5,7 @@ from typing import List
 from fastapi import APIRouter, File, UploadFile
 from pydantic import BaseModel
 from conn.db_conn import engineconn
-from conn.db_class import Test
+from conn.db_class import Test,FileServer
 from datetime import datetime
 
 router = APIRouter()
@@ -40,6 +40,12 @@ async def create_upload_file(in_files: List[UploadFile] = File(...)):
             file_object.write(file.file.read())
         file_urls.append(SERVER_IMG_DIR + saved_file_name)
     result = {'fileUrls': file_urls}
+    write_fileseverList(saved_file_name,file_urls)
     return result
 
+def write_fileseverList(file_name: str,file_url: str):
+    updateFileList = FileServer(file_name=file_name,file_path=file_url)
+    session.add(updateFileList)
+    session.commit()
+    return 0
 
