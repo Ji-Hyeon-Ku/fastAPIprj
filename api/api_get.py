@@ -18,9 +18,13 @@ session = engine.sessionmaker()
 @router.get("/",tags=["get"])
 async def first_get():
     example = session.query(Test).all()
+    print(BASE_DIR)
+    print(STATIC_DIR)
+    print(IMG_DIR)
     return example
 
 
 @router.get('/images/{file_name}')
-def get_image(file_name:str):
+async def get_image(file_name:str):
+    print(file_name)
     return FileResponse(''.join([IMG_DIR,file_name]))

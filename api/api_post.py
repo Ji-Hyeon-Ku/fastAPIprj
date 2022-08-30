@@ -32,7 +32,8 @@ async def first_post(item: Item):
 async def create_upload_file(in_files: List[UploadFile] = File(...)):
     file_urls = []
     for file in in_files:
-        saved_file_name = ''.join(["test", secrets.token_hex(16)])
+        ##saved_file_name = ''.join(["test", secrets.token_hex(16)])
+        saved_file_name = in_files[0].filename
         print(saved_file_name)
         file_location = os.path.join(IMG_DIR, saved_file_name)
         with open(file_location, "wb+") as file_object:
